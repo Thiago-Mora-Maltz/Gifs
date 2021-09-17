@@ -17,12 +17,14 @@
     justify-content: space-evenly;
     flex-wrap: wrap;
     width: 85%;
+    height: 10vh;
 }
 
 .trending{
     width: 15%;
     font-size: 1.5rem;
 }
+
 ul{
     list-style:none;
 }

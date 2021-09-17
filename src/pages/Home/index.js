@@ -9,6 +9,7 @@ function Home() {
     <Fragment>
       <div className='container'>
         <Title />
+        <h2 style={{ marginBottom: '15px' }}>Search for gifs here!</h2>
         <SearchBar />
         <div className='div-home'>
           <div className='gifs'>

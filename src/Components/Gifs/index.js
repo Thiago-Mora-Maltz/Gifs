@@ -2,8 +2,8 @@ import React, { Fragment } from 'react'
 import useGifs from '../../hooks/useGifs'
 import { Link } from 'react-router-dom'
 import './Gifs.css'
-function Gifs({ keyword, rating }) {
-  const gifs = useGifs(keyword, rating)
+function Gifs({ keyword, rating, home }) {
+  const { gifs } = useGifs(keyword, rating, home)
   return (
     <Fragment>
       {gifs.map((gif) => (

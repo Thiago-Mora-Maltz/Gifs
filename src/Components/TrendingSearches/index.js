@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import trendingGifs from '../../services/trendingGifs'
 import './TrendingSearches.css'
@@ -8,18 +8,23 @@ function TrendingSearches() {
     trendingGifs().then(setTrends)
   }, [])
   return (
-    <Fragment>
+    <>
       <ul className='results'>
         <h2 style={{ marginBottom: '25px' }}>Trending Searches</h2>
         {trends.map((searches) => (
           <li key={searches}>
-            <Link to={`/search/${encodeURIComponent(searches)}`}>
+            <Link
+              onClick={() => {
+                localStorage.setItem('lastKeyword', searches)
+              }}
+              to={`/search/${encodeURIComponent(searches)}`}
+            >
               {searches}
             </Link>
           </li>
         ))}
       </ul>
-    </Fragment>
+    </>
   )
 }
 

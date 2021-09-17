@@ -1,11 +1,14 @@
-import { useEffect, useContext } from 'react'
+import { useEffect, useContext, useState } from 'react'
 import fetchGifs from '../services/fetchGifs'
 import GifsContext from '../context/GifsContext'
-export default function useGifs(keyword, rating) {
-  const { gifs, setGifs } = useContext(GifsContext)
 
+export default function useGifs(keyword, rating) {
+  const INITIAL_PAGE = 0
+  const { gifs, setGifs } = useContext(GifsContext)
+  const [page, setPage] = useState(INITIAL_PAGE)
+  const lastKeyword = localStorage.getItem('lastKeyword')
   const keywordFetch =
-    keyword || localStorage.getItem('lastKeyword') || 'search'
+    keyword || (lastKeyword === null ? 'search' : lastKeyword)
 
   useEffect(
     function () {
@@ -15,5 +18,17 @@ export default function useGifs(keyword, rating) {
     },
     [keywordFetch, rating, keyword, setGifs]
   )
-  return gifs
+
+  useEffect(
+    function () {
+      if (page === INITIAL_PAGE) return
+
+      fetchGifs(keywordFetch, rating, page).then((nextGifs) => {
+        setGifs((prevGifs) => prevGifs.concat(nextGifs))
+      })
+    },
+    [keywordFetch, page, rating, setGifs]
+  )
+
+  return { gifs, setPage }
 }
